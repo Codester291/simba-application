@@ -9,3 +9,34 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id            Int       @default(autoincrement()) @id
+  name          String?
+  email         String?   @unique
+  password      String?   @unique
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  transactions  Transaction[]
+
+  @@map(name: "users")
+}
+
+model Transaction {
+  id            Int       @default(autoincrement()) @id
+  userId        Int            
+  user          User?     @relation(fields: [userId], references: [id])
+  amount        Float     
+  currency      Currency  @default(EUR)
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+
+  @@map(name: "transactions")
+  @@index([userId], name: "userId")
+}
+
+enum Currency {
+  USD
+  EUR
+  NGN
+}
