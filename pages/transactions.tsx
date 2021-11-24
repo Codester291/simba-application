@@ -41,8 +41,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 }
 
 const Transactions = ({ session, transactions, user }) => {
-    const [recipient] = transactions;
-    console.log(`RecipientServerSide: ${JSON.stringify(recipient)}`)
     const router = useRouter();
     const goToTransferPage = () => {
         router.push("/transferpage")
@@ -56,7 +54,7 @@ const Transactions = ({ session, transactions, user }) => {
             <div className="flex flex-nowrap justify-between p-12">
                 <h3 className="font-semibold text-base text-red-500 cursor-pointer" onClick={() => signOut()}>Logout</h3>
                 <h3 className="font-semibold text-2xl text-gray-500 cursor-pointer font-comforter">Simba Finance</h3>
-                <small className="font-semibold text-2xl text-gray-500 cursor-pointer"><small className="font-semibold text-xs text-indigo-500 cursor-pointer">Balance: </small>{currencyFormatter.format(user?.balance, {code: "NGN"})}</small>
+                <small className="font-semibold text-2xl text-gray-500 cursor-pointer"><small className="font-semibold text-xs text-indigo-500 cursor-pointer">Balance: </small>{currencyFormatter.format(user?.balance, {code: "USD"})}</small>
             </div>
             <section className="py-1 bg-blueGray-50">
                 <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 mx-auto mt-24">
