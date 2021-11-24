@@ -4,6 +4,10 @@ import prisma from '../../../lib/prisma'
 import { compare } from 'bcrypt'
 
 const options = {
+  session: {
+    jwt: true,
+    maxAge: 30 * 24 * 60 * 60,
+  },
   providers: [
     Providers.Credentials({
       id: 'credentials',
@@ -20,26 +24,26 @@ const options = {
         if (!checkPassword) {
           throw new Error('Invalid password')
         }
-        return user;
+        return user
       },
     }),
   ],
   callbacks: {
-    async session (session, token) {
-      if(token) {
-        session.id = token.id;
+    async session(session, token) {
+      if (token) {
+        session.id = token.id
       }
 
-      return session;
+      return session
     },
-    async jwt (token, user) {
-      if(user) {
-        token.id = user.id;
+    async jwt(token, user) {
+      if (user) {
+        token.id = user.id
       }
 
-      return token;
-    }
-  }
-};
+      return token
+    },
+  },
+}
 
-export default (req, res) => NextAuth(req, res, options);
+export default (req, res) => NextAuth(req, res, options)
